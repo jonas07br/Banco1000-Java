@@ -2,16 +2,16 @@ package br.ufrn.bti.banco1000.service;
 
 import java.util.Scanner;
 
-import br.ufrn.bti.banco1000.model.Cliente;
-import br.ufrn.bti.banco1000.model.Conta;
-import br.ufrn.bti.banco1000.model.TipoConta;
+import br.ufrn.bti.banco1000.model.Client;
+import br.ufrn.bti.banco1000.model.Account;
+import br.ufrn.bti.banco1000.model.enumerations.AccountType;
 
-public class ContaService {
+public class AccountService {
 
     private Scanner scan = new Scanner(System.in);
-    public Conta criarConta(Cliente cliente){
+    public Account criarConta(Client cliente){
         try{
-            TipoConta tipoConta = null;
+            AccountType accountType = null;
             System.out.println("Qual tipo de conta deseja criar?");
             System.out.println("1 - Corrente");
             System.out.println("2 - Poupança");
@@ -21,16 +21,16 @@ public class ContaService {
             
             switch (op) {
                 case 1:
-                    tipoConta = TipoConta.CORRENTE;
+                    accountType = AccountType.CORRENTE;
                     break;
                 case 2:
-                    tipoConta = TipoConta.POUPANCA;
+                    accountType = AccountType.POUPANCA;
                     break;
                 default:
                     System.out.println("Opção invalida");
                 break;
             }
-            Conta conta = new Conta(cliente,tipoConta,senha);
+            Account conta = new Account(cliente,accountType,senha);
             cliente.setContas(conta);
             
             return conta;

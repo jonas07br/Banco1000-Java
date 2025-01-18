@@ -4,62 +4,64 @@
  */
 package br.ufrn.bti.banco1000.model;
 
+import br.ufrn.bti.banco1000.model.enumerations.AccountType;
+
 import java.util.ArrayList;
 
-public class Conta {
-    private Cliente cliente;
+public class Account {
+    private Client cliente;
     private int agencia;
     private int numeroConta;
-    private TipoConta tipo;
+    private AccountType tipo;
 
-    public TipoConta getTipo() {
+    public AccountType getTipo() {
         return tipo;
     }
 
 
     private int senha;
     private double saldo;
-    private ArrayList<Movimentacao> movimentacao = new ArrayList();
+    private ArrayList<Transaction> transaction = new ArrayList();
 
     
     
-    public Conta(Cliente cliente, TipoConta tipo, int senha) {
+    public Account(Client cliente, AccountType tipo, int senha) {
         this.cliente=cliente;
         this.agencia = 1000;
         this.numeroConta = (int) (Math.random() * 1000);
         this.tipo = tipo;
         this.senha = senha;
         this.saldo = 0;
-        this.movimentacao = new ArrayList();
+        this.transaction = new ArrayList();
     }
     
     
     public String depositar(double valor) {
         this.saldo = this.saldo + valor;
-        this.movimentacao.add(new Movimentacao("DEPOSITO", this.cliente, "DEPOSITO", valor));
+        this.transaction.add(new Transaction("DEPOSITO", this.cliente, "DEPOSITO", valor));
         return "Deposito realizado com sucesso";
     }
     
     public String sacar(double valor) {
         if (this.saldo - valor >= 0) {
             this.saldo = this.saldo - valor;
-            this.movimentacao.add(new Movimentacao("SAQUE", this.cliente, "SAQUE", valor));
+            this.transaction.add(new Transaction("SAQUE", this.cliente, "SAQUE", valor));
             return "Saque realizado com sucesso";
         }
         return "Saldo insuficiente";
     }
     
-    public String transferir(Conta conta, double valor) {
+    public String transferir(Account conta, double valor) {
         if (this.saldo - valor >= 0 ) {
             this.sacar(valor);
-            this.movimentacao.remove(this.movimentacao.size()-1);
+            this.transaction.remove(this.transaction.size()-1);
             
             conta.depositar(valor);
-            conta.movimentacao.remove(conta.movimentacao.size()-1);
+            conta.transaction.remove(conta.transaction.size()-1);
             
-            conta.movimentacao.add(new Movimentacao("TRANSFERENCIA", this.cliente, 
+            conta.transaction.add(new Transaction("TRANSFERENCIA", this.cliente, 
             "ENTRADA POR TRANSFERENCIA", valor));
-            this.movimentacao.add(new Movimentacao("TRANSFERENCIA", this.cliente, 
+            this.transaction.add(new Transaction("TRANSFERENCIA", this.cliente, 
             "SAIDA POR TRANSFERENCIA", valor));
             
             return "Transferencia realizada com sucesso";
@@ -96,7 +98,7 @@ public class Conta {
     
     
     
-    public void setTipoConta(TipoConta tipo) {
+    public void setTipoConta(AccountType tipo) {
         this.tipo = tipo;
     }
     
@@ -104,15 +106,15 @@ public class Conta {
     @Override
     public String toString() {
         return "Conta [cliente=" + cliente.getNome() + ", agencia=" + agencia + ", numeroConta=" + numeroConta + ", tipo=" + tipo
-        + ", senha=" + senha + ", saldo=" + saldo + ", movimentacao=" + movimentacao + "]";
+        + ", senha=" + senha + ", saldo=" + saldo + ", transaction=" + transaction + "]";
     }
     
-    public ArrayList<Movimentacao> getMovimentacao() {
-        return movimentacao;
+    public ArrayList<Transaction> getTransaction() {
+        return transaction;
     }
     
     
-    public void setMovimentacao(ArrayList<Movimentacao> movimentacao) {
-        this.movimentacao = movimentacao;
+    public void setTransaction(ArrayList<Transaction> transaction) {
+        this.transaction = transaction;
     }
 }

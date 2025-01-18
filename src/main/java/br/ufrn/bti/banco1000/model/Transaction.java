@@ -10,11 +10,11 @@ import java.util.Date;
  *
  * @author vinicius
  */
-public class Movimentacao {
+public class Transaction {
     
     private Date data;
     private String tipo;
-    private Cliente cliente;
+    private Client cliente;
     private String descricao;
     private double valor;
     
@@ -34,11 +34,11 @@ public class Movimentacao {
         this.tipo = tipo;
     }
 
-    public Cliente getCliente() {
+    public Client getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Client cliente) {
         this.cliente = cliente;
     }
 
@@ -58,7 +58,7 @@ public class Movimentacao {
         this.valor = valor;
     }
     
-    public Movimentacao(String tipo, Cliente cliente, String descricao, double valor) {
+    public Transaction(String tipo, Client cliente, String descricao, double valor) {
         this.data = new Date();
         this.tipo = tipo;
         this.cliente = cliente;
