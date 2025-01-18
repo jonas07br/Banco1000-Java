@@ -68,7 +68,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Movimentacao [data=" + data + ", tipo=" + tipo + ", cliente=" + cliente.getNome() + ", descricao=" + descricao
+        return "Movimentacao [data=" + data + ", tipo=" + tipo + ", cliente=" + cliente.getName() + ", descricao=" + descricao
                 + ", valor=" + valor + "]";
     }
 }

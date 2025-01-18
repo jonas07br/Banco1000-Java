@@ -12,74 +12,91 @@ import java.util.List;
  * @author vinicius
  */
 public class Client {
-    private String nome;
+    private String name;
     private String cpf;
     private String email;
-    private String telefone;
-    private List<Account> contas;
-    private String senha;
+    private String phoneNumber;
+    private Long id;
+    private String password;
     
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Client(String nome, String cpf, String email, String telefone, String senha) {
-       this.nome = nome;
+    public Client(String name, String cpf, String email, String phoneNumber, String password) {
+       this.name = name;
        this.cpf = cpf;
        this.email = email;
-       this. telefone = telefone;
-       this.contas = new ArrayList<>();
-       this.senha= senha;
+       this. phoneNumber = phoneNumber;
+       this.password= password;
     }
 
-    public String getNome() {
-        return nome;
+    
+    @Override
+    public String toString() {
+        return 
+        id +","+
+        name +","+ 
+        cpf +","+ 
+        email +","+ 
+        phoneNumber+","+
+        password;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+
+    public String getName() {
+        return name;
     }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     public String getCpf() {
         return cpf;
     }
 
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
 
     public String getEmail() {
         return email;
     }
 
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getTelefone() {
-        return telefone;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public List<Account> getContas() {
-        return this.contas;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setContas(Account conta) {
-        this.contas.add(conta);
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Cliente [nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", telefone=" + telefone + ", contas="
-                + contas + "]";
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     

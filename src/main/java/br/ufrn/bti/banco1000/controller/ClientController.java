@@ -23,21 +23,21 @@ public class ClientController {
     // }
 
     //funcoes enquanto logado
-    public String depositar(Client clienteLogado) {
-        return clienteService.depositar(clienteLogado);
-    }
-    public String sacar(Client clienteLogado) {
-        return clienteService.sacar(clienteLogado);
-    }
-    public String transferir(Client clienteLogado, List<Account> contas) {
-        return clienteService.transferir(clienteLogado,contas);
-    }
-    public String verSaldo(Client clienteLogado) {
-        return clienteService.verSaldo(clienteLogado);
-    }
-    public String verExtrato(Client clienteLogado) {
-        return clienteService.verExtrato(clienteLogado);
-    }
+    // public String depositar(Client clienteLogado) {
+    //     return clienteService.depositar(clienteLogado);
+    // }
+    // public String sacar(Client clienteLogado) {
+    //     return clienteService.sacar(clienteLogado);
+    // }
+    // public String transferir(Client clienteLogado, List<Account> contas) {
+    //     return clienteService.transferir(clienteLogado,contas);
+    // }
+    // public String verSaldo(Client clienteLogado) {
+    //     return clienteService.verSaldo(clienteLogado);
+    // }
+    // public String verExtrato(Client clienteLogado) {
+    //     return clienteService.verExtrato(clienteLogado);
+    // }
 
 
     

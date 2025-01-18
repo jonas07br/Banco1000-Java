@@ -53,27 +53,27 @@ public class Terminal {
             if(clienteLogado != null){
                 System.out.println(opcoesComLogin);
                 int op = scan.nextInt();
-                if(op == 1){
-                    System.out.println(this.clienteController.depositar(clienteLogado));
+                // if(op == 1){
+                //     System.out.println(this.clienteController.depositar(clienteLogado));
                 
-                } else if(op == 2){
-                    System.out.println(this.clienteController.sacar(clienteLogado));
+                // } else if(op == 2){
+                //     System.out.println(this.clienteController.sacar(clienteLogado));
                     
-                } else if(op == 3){
-                    System.out.println(this.clienteController.transferir(clienteLogado,contasBd));
+                // } else if(op == 3){
+                //     System.out.println(this.clienteController.transferir(clienteLogado,contasBd));
                     
-                } else if(op == 4){
-                    System.out.println(this.clienteController.verSaldo(clienteLogado));
+                // } else if(op == 4){
+                //     System.out.println(this.clienteController.verSaldo(clienteLogado));
 
-                } else if(op == 5){
-                    System.out.println(this.clienteController.verExtrato(clienteLogado));
+                // } else if(op == 5){
+                //     System.out.println(this.clienteController.verExtrato(clienteLogado));
 
-                } else if(op == 6){
-                    this.clienteLogado = null;
+                // } else if(op == 6){
+                //     this.clienteLogado = null;
                     
-                } else {
-                    System.out.println("Opção invalida");
-                }
+                // } else {
+                //     System.out.println("Opção invalida");
+                // }
             }
             else{
                 System.out.println(opcoesSemLogin);
@@ -129,9 +129,9 @@ public class Terminal {
                         }
                     }
                     if(clienteLogado != null){
-                        if(clienteLogado.getSenha().equals(senhaLogin)){
+                        if(clienteLogado.getPassword().equals(senhaLogin)){
                             System.out.println("Logado com sucesso");
-                            System.out.println("Bem vindo "+clienteLogado.getNome());
+                            System.out.println("Bem vindo "+clienteLogado.getName());
                             this.clienteLogado = clienteLogado;
                         } else {
                             System.out.println("Senha incorreta");

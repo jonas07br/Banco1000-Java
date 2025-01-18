@@ -35,14 +35,14 @@ public class ClientService {
         int op =scanOp.nextInt();
         switch (op){
             case 1:
-                cliente.setNome(setNome());
+                cliente.setName(setNome());
                 break;
             case 2:
                 cliente.setEmail(setEmail()); 
                 break;
                 
             case 3:
-                cliente.setTelefone(setTelefone());  
+                cliente.setPhoneNumber(setTelefone());  
                 break;
                 
             default:
@@ -109,89 +109,89 @@ public class ClientService {
         }
     }
     
-    public String depositar(Client cliente){
-        if(cliente.getContas().size() >1){
-            System.out.println("Qual valor deseja depositar?");
-            double valor = scan.nextDouble();
-            return this.selecionarConta(cliente).depositar(valor);
-        }
-        else{
-            System.out.println("Qual valor deseja depositar?");
-            double valor = scan.nextDouble();
-            return cliente.getContas().get(0).depositar(valor);
-        }
-    }
-    public Account selecionarConta(Client cliente){
-        System.out.println("Selecione a conta desejada:");
-            for(int i = 1; i <= cliente.getContas().size(); i++){
-                System.out.println(i + " - " + cliente.getContas().get(i-1).getNumConta()+ " - "+cliente.getContas().get(i-1).getTipo());
-            }
-            int op = scan.nextInt();
-            if(cliente.getContas().get(op-1)==null){
-                System.out.println("Conta inexistente");
-            }
-            return cliente.getContas().get(op-1);
-    }
-    public String sacar(Client cliente) {
-        if(cliente.getContas().size() >1){
-            System.out.println("Qual valor deseja sacar?");
-            double valor = scan.nextDouble();
-            return this.selecionarConta(cliente).sacar(valor);
-        }
-        else{
-            System.out.println("Qual valor deseja sacar?");
-            double valor = scan.nextDouble();
-            return cliente.getContas().get(0).sacar(valor);
-        }
-    }
-    public String transferir(Client clienteLogado, List<Account> contasBd) {
-        System.out.println("Qual valor deseja transferir?");
-        double valor = scan.nextDouble();
-        System.out.println("Informe o numero da conta do destinatario:");
-        int numConta = scan.nextInt();
-        Account contaDestino = null;
-        for(Account c : contasBd){
-            if(c.getNumConta()==numConta){
-                contaDestino = c;
-                System.out.println("Conta encontrada");
-            }
-        }
-        if(contaDestino == null){
-            System.out.println("Conta inexistente");
-        }
-        if(clienteLogado.getContas().size()>1){
-            System.out.println("Selecione de onde o dinheiro sairá.");
-            return this.selecionarConta(clienteLogado).transferir(contaDestino, valor);
-        }
-        else{
-            return clienteLogado.getContas().get(0).transferir(contaDestino, valor);
-        }
+    // public String depositar(Client cliente){
+    //     if(cliente.getContas().size() >1){
+    //         System.out.println("Qual valor deseja depositar?");
+    //         double valor = scan.nextDouble();
+    //         return this.selecionarConta(cliente).depositar(valor);
+    //     }
+    //     else{
+    //         System.out.println("Qual valor deseja depositar?");
+    //         double valor = scan.nextDouble();
+    //         return cliente.getContas().get(0).depositar(valor);
+    //     }
+    // }
+    // public Account selecionarConta(Client cliente){
+    //     System.out.println("Selecione a conta desejada:");
+    //         for(int i = 1; i <= cliente.getContas().size(); i++){
+    //             System.out.println(i + " - " + cliente.getContas().get(i-1).getNumConta()+ " - "+cliente.getContas().get(i-1).getTipo());
+    //         }
+    //         int op = scan.nextInt();
+    //         if(cliente.getContas().get(op-1)==null){
+    //             System.out.println("Conta inexistente");
+    //         }
+    //         return cliente.getContas().get(op-1);
+    // }
+    // public String sacar(Client cliente) {
+    //     if(cliente.getContas().size() >1){
+    //         System.out.println("Qual valor deseja sacar?");
+    //         double valor = scan.nextDouble();
+    //         return this.selecionarConta(cliente).sacar(valor);
+    //     }
+    //     else{
+    //         System.out.println("Qual valor deseja sacar?");
+    //         double valor = scan.nextDouble();
+    //         return cliente.getContas().get(0).sacar(valor);
+    //     }
+    // }
+    // public String transferir(Client clienteLogado, List<Account> contasBd) {
+    //     System.out.println("Qual valor deseja transferir?");
+    //     double valor = scan.nextDouble();
+    //     System.out.println("Informe o numero da conta do destinatario:");
+    //     int numConta = scan.nextInt();
+    //     Account contaDestino = null;
+    //     for(Account c : contasBd){
+    //         if(c.getNumConta()==numConta){
+    //             contaDestino = c;
+    //             System.out.println("Conta encontrada");
+    //         }
+    //     }
+    //     if(contaDestino == null){
+    //         System.out.println("Conta inexistente");
+    //     }
+    //     if(clienteLogado.getContas().size()>1){
+    //         System.out.println("Selecione de onde o dinheiro sairá.");
+    //         return this.selecionarConta(clienteLogado).transferir(contaDestino, valor);
+    //     }
+    //     else{
+    //         return clienteLogado.getContas().get(0).transferir(contaDestino, valor);
+    //     }
 
-    }
-    public String verSaldo(Client clienteLogado) {
-        if(clienteLogado.getContas().size()>1){
-            System.out.println("Selecione a conta desejada:");
-            String saldo = "R$"+this.selecionarConta(clienteLogado).getSaldo();
-            return saldo;
-        }
-        else{
-            String saldo = "R$"+clienteLogado.getContas().get(0).getSaldo();
-            return saldo;
-        }
-    }
-    public String verExtrato(Client clienteLogado) {
-        if(clienteLogado.getContas().size()>1){
-            System.out.println("Selecione a conta desejada:");
-            List<Transaction> extrato = this.selecionarConta(clienteLogado).getTransaction();
-            extrato.forEach(System.out::println);
-            return "Extrato impresso";
-        }
-        else{     
-            List<Transaction> extrato = clienteLogado.getContas().get(0).getTransaction();
-            extrato.forEach(System.out::println);
-            return "Extrato impresso";
-        }
-    }
+    // }
+    // public String verSaldo(Client clienteLogado) {
+    //     if(clienteLogado.getContas().size()>1){
+    //         System.out.println("Selecione a conta desejada:");
+    //         String saldo = "R$"+this.selecionarConta(clienteLogado).getSaldo();
+    //         return saldo;
+    //     }
+    //     else{
+    //         String saldo = "R$"+clienteLogado.getContas().get(0).getSaldo();
+    //         return saldo;
+    //     }
+    // }
+    // public String verExtrato(Client clienteLogado) {
+    //     if(clienteLogado.getContas().size()>1){
+    //         System.out.println("Selecione a conta desejada:");
+    //         List<Transaction> extrato = this.selecionarConta(clienteLogado).getTransaction();
+    //         extrato.forEach(System.out::println);
+    //         return "Extrato impresso";
+    //     }
+    //     else{     
+    //         List<Transaction> extrato = clienteLogado.getContas().get(0).getTransaction();
+    //         extrato.forEach(System.out::println);
+    //         return "Extrato impresso";
+    //     }
+    // }
 
     
 

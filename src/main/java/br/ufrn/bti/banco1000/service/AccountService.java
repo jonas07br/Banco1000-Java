@@ -30,8 +30,8 @@ public class AccountService {
                     System.out.println("Opção invalida");
                 break;
             }
-            Account conta = new Account(cliente,accountType,senha);
-            cliente.setContas(conta);
+            Account conta = new Account(cliente.getId(),accountType,senha);
+            // cliente.setContas(conta);
             
             return conta;
 
