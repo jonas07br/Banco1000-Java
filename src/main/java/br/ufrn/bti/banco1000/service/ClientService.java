@@ -3,18 +3,18 @@ package br.ufrn.bti.banco1000.service;
 import java.util.List;
 import java.util.Scanner;
 
-import br.ufrn.bti.banco1000.model.Cliente;
-import br.ufrn.bti.banco1000.model.Conta;
-import br.ufrn.bti.banco1000.model.Movimentacao;
+import br.ufrn.bti.banco1000.model.Client;
+import br.ufrn.bti.banco1000.model.Account;
+import br.ufrn.bti.banco1000.model.Transaction;
 
-public class ClienteService {
+public class ClientService {
 
     private  Scanner scan = new Scanner(System.in);
 
     public  void closeScanner(){
         scan.close();
     }   
-    public  Cliente criarCliente(){
+    public  Client criarClient(){
         while(true){
             String nome = this.setNome();
             String cpf = this.setCpf();
@@ -22,11 +22,11 @@ public class ClienteService {
             String telefone = this.setTelefone();
             String senha = this.setSenha();
             
-            System.out.println("Cliente criado com sucesso");
-            return new Cliente(nome, cpf, email, telefone, senha);
+            System.out.println("Client criado com sucesso");
+            return new Client(nome, cpf, email, telefone, senha);
         }
     }
-    public Cliente atualizarCliente(Cliente cliente) {
+    public Client atualizarClient(Client cliente) {
         Scanner scanOp = new Scanner(System.in);
         System.out.println("O que deseja atualizar?");
         System.out.println("1 - Nome");
@@ -109,7 +109,7 @@ public class ClienteService {
         }
     }
     
-    public String depositar(Cliente cliente){
+    public String depositar(Client cliente){
         if(cliente.getContas().size() >1){
             System.out.println("Qual valor deseja depositar?");
             double valor = scan.nextDouble();
@@ -121,7 +121,7 @@ public class ClienteService {
             return cliente.getContas().get(0).depositar(valor);
         }
     }
-    public Conta selecionarConta(Cliente cliente){
+    public Account selecionarConta(Client cliente){
         System.out.println("Selecione a conta desejada:");
             for(int i = 1; i <= cliente.getContas().size(); i++){
                 System.out.println(i + " - " + cliente.getContas().get(i-1).getNumConta()+ " - "+cliente.getContas().get(i-1).getTipo());
@@ -132,7 +132,7 @@ public class ClienteService {
             }
             return cliente.getContas().get(op-1);
     }
-    public String sacar(Cliente cliente) {
+    public String sacar(Client cliente) {
         if(cliente.getContas().size() >1){
             System.out.println("Qual valor deseja sacar?");
             double valor = scan.nextDouble();
@@ -144,13 +144,13 @@ public class ClienteService {
             return cliente.getContas().get(0).sacar(valor);
         }
     }
-    public String transferir(Cliente clienteLogado, List<Conta> contasBd) {
+    public String transferir(Client clienteLogado, List<Account> contasBd) {
         System.out.println("Qual valor deseja transferir?");
         double valor = scan.nextDouble();
         System.out.println("Informe o numero da conta do destinatario:");
         int numConta = scan.nextInt();
-        Conta contaDestino = null;
-        for(Conta c : contasBd){
+        Account contaDestino = null;
+        for(Account c : contasBd){
             if(c.getNumConta()==numConta){
                 contaDestino = c;
                 System.out.println("Conta encontrada");
@@ -168,7 +168,7 @@ public class ClienteService {
         }
 
     }
-    public String verSaldo(Cliente clienteLogado) {
+    public String verSaldo(Client clienteLogado) {
         if(clienteLogado.getContas().size()>1){
             System.out.println("Selecione a conta desejada:");
             String saldo = "R$"+this.selecionarConta(clienteLogado).getSaldo();
@@ -179,15 +179,15 @@ public class ClienteService {
             return saldo;
         }
     }
-    public String verExtrato(Cliente clienteLogado) {
+    public String verExtrato(Client clienteLogado) {
         if(clienteLogado.getContas().size()>1){
             System.out.println("Selecione a conta desejada:");
-            List<Movimentacao> extrato = this.selecionarConta(clienteLogado).getMovimentacao();
+            List<Transaction> extrato = this.selecionarConta(clienteLogado).getTransaction();
             extrato.forEach(System.out::println);
             return "Extrato impresso";
         }
         else{     
-            List<Movimentacao> extrato = clienteLogado.getContas().get(0).getMovimentacao();
+            List<Transaction> extrato = clienteLogado.getContas().get(0).getTransaction();
             extrato.forEach(System.out::println);
             return "Extrato impresso";
         }

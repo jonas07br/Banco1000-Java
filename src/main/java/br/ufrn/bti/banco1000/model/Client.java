@@ -11,12 +11,12 @@ import java.util.List;
  *
  * @author vinicius
  */
-public class Cliente {
+public class Client {
     private String nome;
     private String cpf;
     private String email;
     private String telefone;
-    private List<Conta> contas;
+    private List<Account> contas;
     private String senha;
     
     public String getSenha() {
@@ -27,7 +27,7 @@ public class Cliente {
         this.senha = senha;
     }
 
-    public Cliente(String nome, String cpf, String email, String telefone, String senha) {
+    public Client(String nome, String cpf, String email, String telefone, String senha) {
        this.nome = nome;
        this.cpf = cpf;
        this.email = email;
@@ -68,11 +68,11 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public List<Conta> getContas() {
+    public List<Account> getContas() {
         return this.contas;
     }
 
-    public void setContas(Conta conta) {
+    public void setContas(Account conta) {
         this.contas.add(conta);
     }
 

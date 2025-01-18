@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import br.ufrn.bti.banco1000.controller.ClienteController;
-import br.ufrn.bti.banco1000.controller.ContaController;
-import br.ufrn.bti.banco1000.model.Cliente;
-import br.ufrn.bti.banco1000.model.Conta;
-import br.ufrn.bti.banco1000.model.TipoConta;
-import br.ufrn.bti.banco1000.service.ClienteService;
-import br.ufrn.bti.banco1000.service.ContaService;
+import br.ufrn.bti.banco1000.controller.ClientController;
+import br.ufrn.bti.banco1000.controller.AccountController;
+import br.ufrn.bti.banco1000.model.Client;
+import br.ufrn.bti.banco1000.model.Account;
+import br.ufrn.bti.banco1000.model.enumerations.AccountType;
+import br.ufrn.bti.banco1000.service.ClientService;
+import br.ufrn.bti.banco1000.service.AccountService;
 
 public class Terminal {
 
-    // private ClienteService clienteService;
-    // private ContaService contaService;
-    private ClienteController clienteController;
-    private ContaController contaController;
+    // private ClientService clienteService;
+    // private AccountService contaService;
+    private ClientController clienteController;
+    private AccountController contaController;
 
-    private List<Cliente> clientesBd;
-    private List<Conta> contasBd;
+    private List<Client> clientesBd;
+    private List<Account> contasBd;
 
-    public Cliente clienteLogado;
+    public Client clienteLogado;
 
     //opcoes
     public String opcoesSemLogin = 
@@ -38,8 +38,8 @@ public class Terminal {
         "6 - Sair";
 
     public Terminal(){
-        this.clienteController = new ClienteController();
-        this.contaController = new ContaController();
+        this.clienteController = new ClientController();
+        this.contaController = new AccountController();
 
         this.clientesBd = new ArrayList<>();
         this.contasBd = new ArrayList<>();
@@ -85,30 +85,30 @@ public class Terminal {
                     String opCadastro = scan.next();
                     if(opCadastro.equals("s")){
                         System.out.println("Informe seu CPF:");
-                        String cpfConta = scan.next();
-                        Cliente clienteConta = null;
-                        for(Cliente c : clientesBd){
-                            if(c.getCpf().equals(cpfConta)){
-                                clienteConta = c;
+                        String cpfAccount = scan.next();
+                        Client clienteAccount = null;
+                        for(Client c : clientesBd){
+                            if(c.getCpf().equals(cpfAccount)){
+                                clienteAccount = c;
                             }
                         }
-                        if(clienteConta != null){
-                            Conta conta = contaController.criarConta(clienteConta);
+                        if(clienteAccount != null){
+                            Account conta = contaController.createAccount(clienteAccount);
                             if(conta != null){
-                                System.out.println("Conta criada com sucesso");
+                                System.out.println("Account criada com sucesso");
                                 contasBd.add(conta);
                             }
                             
                             
                         } else {
-                            System.out.println("Cliente não encontrado");
+                            System.out.println("Client não encontrado");
                         }
                     }
                     else{
-                        Cliente cliente = clienteController.criarCliente();
-                        Conta conta = contaController.criarConta(cliente);
+                        Client cliente = clienteController.criarClient();
+                        Account conta = contaController.createAccount(cliente);
                         if(conta!=null){
-                            System.out.println("Conta criada com sucesso");
+                            System.out.println("Account criada com sucesso");
                             contasBd.add(conta);
                         }
                         
@@ -122,8 +122,8 @@ public class Terminal {
                     String cpfLogin = scan.next();
                     System.out.println("Informe sua senha:");
                     String senhaLogin = scan.next();
-                    Cliente clienteLogado = null;
-                    for(Cliente c : clientesBd){
+                    Client clienteLogado = null;
+                    for(Client c : clientesBd){
                         if(c.getCpf().equals(cpfLogin)){
                             clienteLogado = c;
                         }
@@ -137,13 +137,13 @@ public class Terminal {
                             System.out.println("Senha incorreta");
                         }
                     } else {
-                        System.out.println("Cliente não encontrado");
+                        System.out.println("Client não encontrado");
                     }
                 } else if(op == 3){
                     scan.close();
                     return;
                 } else if(op == 4){
-                    System.out.println("Clientes cadastrados");
+                    System.out.println("Clients cadastrados");
                     this.clientesBd.forEach(System.out::println);
                     
                 } else {
