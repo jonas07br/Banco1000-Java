@@ -1,5 +1,6 @@
 package br.ufrn.bti.banco1000.service;
 
+import java.util.List;
 import java.util.Scanner;
 
 import br.ufrn.bti.banco1000.model.Client;
@@ -21,6 +22,7 @@ public class AccountService {
             System.out.println("Qual tipo de conta deseja criar?");
             System.out.println("1 - Corrente");
             System.out.println("2 - Poupança");
+            System.out.println("3 - Salario");
             int op =scan.nextInt();
             System.out.println("Informe uma senha numerica para o uso da conta:");
             int senha = scan.nextInt();
@@ -31,6 +33,9 @@ public class AccountService {
                     break;
                 case 2:
                     accountType = AccountType.POUPANCA;
+                    break;
+                case 3:
+                    accountType = AccountType.SALARIO;
                     break;
                 default:
                     System.out.println("Opção invalida");
@@ -47,5 +52,25 @@ public class AccountService {
             return null;
         }
         
+    }
+    public void deposit(Account account,double value){
+        List<Account> accounts = accountRepository.findAll();
+        for(Account acc: accounts){
+            if(acc.getAccountNumber().compareTo(account.getAccountNumber()) == 0){
+                acc.setBalance(acc.getBalance()+value);
+                break;
+            }
+        }
+        accountRepository.saveAll(accounts);
+    }
+    public void withdraw(Account account,double value){
+        List<Account> accounts = accountRepository.findAll();
+        for(Account acc: accounts){
+            if(acc.getAccountNumber().compareTo(account.getAccountNumber()) == 0){
+                acc.setBalance(acc.getBalance()-value);
+                break;
+            }
+        }
+        accountRepository.saveAll(accounts);
     }
 }

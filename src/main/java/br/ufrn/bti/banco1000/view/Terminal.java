@@ -56,17 +56,17 @@ public class Terminal {
                 System.out.println(opcoesComLogin);
                 int op = scan.nextInt();
                 if(op == 1){
-                    // System.out.println(this.clienteController.depositar(clienteLogado));
+                    System.out.println(this.clientController.deposit(clienteLogado));
                 }
-                //  else if(op == 2){
-                //     System.out.println(this.clienteController.sacar(clienteLogado));
-                    
+                 else if(op == 2){
+                    System.out.println(this.clientController.withdraw(clienteLogado));
+                 }    
                 // } else if(op == 3){
                 //     System.out.println(this.clienteController.transferir(clienteLogado,contasBd));
                     
-                // } else if(op == 4){
-                //     System.out.println(this.clienteController.verSaldo(clienteLogado));
-
+                else if(op == 4){
+                    System.out.println(this.clientController.getBalance(clienteLogado));
+                }
                 // } else if(op == 5){
                 //     System.out.println(this.clienteController.verExtrato(clienteLogado));
                 // }
@@ -99,7 +99,6 @@ public class Terminal {
                             Account conta = accountController.createAccount(clientAccount);
                             if(conta != null){
                                 System.out.println("Conta criada com sucesso");
-                                accountRepository.save(conta);
                             }
                             
                             

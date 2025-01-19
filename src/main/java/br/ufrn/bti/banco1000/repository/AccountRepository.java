@@ -108,4 +108,28 @@ public class AccountRepository {
             return null;
         }
     }
+    public List<Account> findByClientId(Long clientId){
+        List<Account> accounts = new ArrayList<>();
+        try{
+            List<Account> allAccounts = readCsv();
+            for(Account account : allAccounts){
+                if(account.getClientId().equals(clientId)){
+                    accounts.add(account);
+                }
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return accounts;
+    }
+
+    public void saveAll(List<Account> accounts){
+        try{
+            writeCsv(accounts);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 }

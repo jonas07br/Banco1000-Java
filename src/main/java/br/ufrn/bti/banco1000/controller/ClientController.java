@@ -8,35 +8,35 @@ import br.ufrn.bti.banco1000.service.ClientService;
 
 public class ClientController {
 
-    private ClientService clienteService;
+    private ClientService clientService;
     public ClientController(){
-        this.clienteService = new ClientService();
+        this.clientService = new ClientService();
     }
 
     public Client createClient(){
         System.out.println("Criando cliente");
-        return clienteService.createClient();
+        return clientService.createClient();
     }
     // public Client atualizarClient(Client cliente){
     //     System.out.println("Atualizando cliente");
-    //     return clienteService.atualizarClient(cliente);
+    //     return clientService.atualizarClient(cliente);
     // }
 
-    //funcoes enquanto logado
-    // public String depositar(Client clienteLogado) {
-    //     return clienteService.depositar(clienteLogado);
-    // }
-    // public String sacar(Client clienteLogado) {
-    //     return clienteService.sacar(clienteLogado);
-    // }
+    // funcoes enquanto logado
+    public String deposit(Client loggedClient) {
+        return clientService.deposit(loggedClient);
+    }
+    public String withdraw(Client clienteLogado) {
+        return clientService.withdraw(clienteLogado);
+    }
     // public String transferir(Client clienteLogado, List<Account> contas) {
-    //     return clienteService.transferir(clienteLogado,contas);
+    //     return clientService.transferir(clienteLogado,contas);
     // }
-    // public String verSaldo(Client clienteLogado) {
-    //     return clienteService.verSaldo(clienteLogado);
-    // }
+    public String getBalance(Client clienteLogado) {
+        return clientService.getBalance(clienteLogado);
+    }
     // public String verExtrato(Client clienteLogado) {
-    //     return clienteService.verExtrato(clienteLogado);
+    //     return clientService.verExtrato(clienteLogado);
     // }
 
 

@@ -6,15 +6,21 @@ import java.util.Scanner;
 import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Account;
 import br.ufrn.bti.banco1000.model.Transaction;
+import br.ufrn.bti.banco1000.repository.AccountRepository;
 import br.ufrn.bti.banco1000.repository.ClientRepository;
 
 public class ClientService {
 
-    private  Scanner scan = new Scanner(System.in);
+    private  Scanner scan;
     private ClientRepository clientRepository;
+    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     public ClientService(){
+        this.scan = new Scanner(System.in);
         this.clientRepository = new ClientRepository();
+        this.accountRepository = new AccountRepository();
+        this.accountService = new AccountService();
     }
     public  void closeScanner(){
         scan.close();
@@ -127,18 +133,33 @@ public class ClientService {
         }
     }
     
-    // public String depositar(Client cliente){
-    //     if(cliente.getContas().size() >1){
-    //         System.out.println("Qual valor deseja depositar?");
-    //         double valor = scan.nextDouble();
-    //         return this.selecionarConta(cliente).depositar(valor);
-    //     }
-    //     else{
-    //         System.out.println("Qual valor deseja depositar?");
-    //         double valor = scan.nextDouble();
-    //         return cliente.getContas().get(0).depositar(valor);
-    //     }
-    // }
+    public String deposit(Client cliente){
+        List<Account> accounts = accountRepository.findByClientId(cliente.getId());
+        
+        if(accounts.size()==1){
+            System.out.println("Conta encontrada:"+accounts.get(0));
+            System.out.println("Qual valor deseja depositar?");
+            double valor = scan.nextDouble();
+            accountService.deposit(accounts.get(0), valor);
+            return "Deposito realizado";
+        }
+        else{
+            System.out.println("Selecione a conta desejada:");
+            for(int i = 1; i <= accounts.size(); i++){
+                System.out.println(i + " - " + accounts.get(i-1).getAccountNumber()+ " - "+accounts.get(i-1).getTipo());
+            }
+            int op = scan.nextInt();
+            if(accounts.get(op-1)==null){
+                System.out.println("Conta inexistente");
+            }
+            System.out.println("Qual valor deseja depositar?");
+            double valor = scan.nextDouble();
+            accountService.deposit(accounts.get(op-1), valor);
+            return "Deposito realizado";
+        }
+    }
+
+
     // public Account selecionarConta(Client cliente){
     //     System.out.println("Selecione a conta desejada:");
     //         for(int i = 1; i <= cliente.getContas().size(); i++){
@@ -150,18 +171,31 @@ public class ClientService {
     //         }
     //         return cliente.getContas().get(op-1);
     // }
-    // public String sacar(Client cliente) {
-    //     if(cliente.getContas().size() >1){
-    //         System.out.println("Qual valor deseja sacar?");
-    //         double valor = scan.nextDouble();
-    //         return this.selecionarConta(cliente).sacar(valor);
-    //     }
-    //     else{
-    //         System.out.println("Qual valor deseja sacar?");
-    //         double valor = scan.nextDouble();
-    //         return cliente.getContas().get(0).sacar(valor);
-    //     }
-    // }
+    public String withdraw(Client cliente) {
+        List<Account> accounts = accountRepository.findByClientId(cliente.getId());
+        
+        if(accounts.size()==1){
+            System.out.println("Conta encontrada:"+accounts.get(0));
+            System.out.println("Qual valor deseja sacar?");
+            double valor = scan.nextDouble();
+            accountService.withdraw(accounts.get(0), valor);
+            return "Saque realizado";
+        }
+        else{
+            System.out.println("Selecione a conta desejada:");
+            for(int i = 1; i <= accounts.size(); i++){
+                System.out.println(i + " - " + accounts.get(i-1).getAccountNumber()+ " - "+accounts.get(i-1).getTipo());
+            }
+            int op = scan.nextInt();
+            if(accounts.get(op-1)==null){
+                System.out.println("Conta inexistente");
+            }
+            System.out.println("Qual valor deseja sacar?");
+            double valor = scan.nextDouble();
+            accountService.withdraw(accounts.get(op-1), valor);
+            return "Saque realizado";
+        }
+    }
     // public String transferir(Client clienteLogado, List<Account> contasBd) {
     //     System.out.println("Qual valor deseja transferir?");
     //     double valor = scan.nextDouble();
@@ -186,17 +220,20 @@ public class ClientService {
     //     }
 
     // }
-    // public String verSaldo(Client clienteLogado) {
-    //     if(clienteLogado.getContas().size()>1){
-    //         System.out.println("Selecione a conta desejada:");
-    //         String saldo = "R$"+this.selecionarConta(clienteLogado).getSaldo();
-    //         return saldo;
-    //     }
-    //     else{
-    //         String saldo = "R$"+clienteLogado.getContas().get(0).getSaldo();
-    //         return saldo;
-    //     }
-    // }
+    public String getBalance(Client clienteLogado) {
+        List<Account> accounts = accountRepository.findByClientId(clienteLogado.getId());
+        if(accounts.size()==1){
+            System.out.println("Saldo: "+accounts.get(0).getBalance());
+            return "Saldo impresso";
+        }
+        else{
+            for(int i = 1; i <= accounts.size(); i++){
+                System.out.println(i + " - " + accounts.get(i-1).getAccountNumber()+ " - "+accounts.get(i-1).getTipo()+" - Saldo: "+accounts.get(i-1).getBalance());
+            }
+            
+            return "Saldo impresso";
+        }
+    }
     // public String verExtrato(Client clienteLogado) {
     //     if(clienteLogado.getContas().size()>1){
     //         System.out.println("Selecione a conta desejada:");
