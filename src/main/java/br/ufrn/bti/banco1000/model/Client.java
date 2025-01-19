@@ -19,12 +19,13 @@ public class Client {
     private Long id;
     private String password;
     
-    public Client(String name, String cpf, String email, String phoneNumber, String password) {
-       this.name = name;
-       this.cpf = cpf;
-       this.email = email;
-       this. phoneNumber = phoneNumber;
-       this.password= password;
+    public Client(Long id,String name, String cpf, String email, String phoneNumber, String password) {
+        this.id = id;
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+        this. phoneNumber = phoneNumber;
+        this.password= password;
     }
 
     
@@ -99,6 +100,8 @@ public class Client {
         this.password = password;
     }
 
-    
+    public static String[] getHeaders(){
+        return new String[]{"id","name","cpf","email","phoneNumber","password"};
+    }
     
 }

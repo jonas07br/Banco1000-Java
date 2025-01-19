@@ -13,9 +13,9 @@ public class ClientController {
         this.clienteService = new ClientService();
     }
 
-    public Client criarClient(){
+    public Client createClient(){
         System.out.println("Criando cliente");
-        return clienteService.criarClient();
+        return clienteService.createClient();
     }
     // public Client atualizarClient(Client cliente){
     //     System.out.println("Atualizando cliente");

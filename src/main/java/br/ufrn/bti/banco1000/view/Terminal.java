@@ -9,6 +9,8 @@ import br.ufrn.bti.banco1000.controller.AccountController;
 import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Account;
 import br.ufrn.bti.banco1000.model.enumerations.AccountType;
+import br.ufrn.bti.banco1000.repository.AccountRepository;
+import br.ufrn.bti.banco1000.repository.ClientRepository;
 import br.ufrn.bti.banco1000.service.ClientService;
 import br.ufrn.bti.banco1000.service.AccountService;
 
@@ -16,11 +18,11 @@ public class Terminal {
 
     // private ClientService clienteService;
     // private AccountService contaService;
-    private ClientController clienteController;
-    private AccountController contaController;
+    private ClientController clientController;
+    private AccountController accountController;
 
-    private List<Client> clientesBd;
-    private List<Account> contasBd;
+    private ClientRepository clientRepository;
+    private AccountRepository accountRepository;
 
     public Client clienteLogado;
 
@@ -38,11 +40,11 @@ public class Terminal {
         "6 - Sair";
 
     public Terminal(){
-        this.clienteController = new ClientController();
-        this.contaController = new AccountController();
+        this.clientController = new ClientController();
+        this.accountController = new AccountController();
 
-        this.clientesBd = new ArrayList<>();
-        this.contasBd = new ArrayList<>();
+        this.clientRepository = new ClientRepository();
+        this.accountRepository = new AccountRepository();
 
         this.clienteLogado = null;
 
@@ -53,10 +55,10 @@ public class Terminal {
             if(clienteLogado != null){
                 System.out.println(opcoesComLogin);
                 int op = scan.nextInt();
-                // if(op == 1){
-                //     System.out.println(this.clienteController.depositar(clienteLogado));
-                
-                // } else if(op == 2){
+                if(op == 1){
+                    // System.out.println(this.clienteController.depositar(clienteLogado));
+                }
+                //  else if(op == 2){
                 //     System.out.println(this.clienteController.sacar(clienteLogado));
                     
                 // } else if(op == 3){
@@ -67,13 +69,14 @@ public class Terminal {
 
                 // } else if(op == 5){
                 //     System.out.println(this.clienteController.verExtrato(clienteLogado));
-
-                // } else if(op == 6){
-                //     this.clienteLogado = null;
-                    
-                // } else {
-                //     System.out.println("Opção invalida");
                 // }
+                
+                else if(op == 6){
+                    this.clienteLogado = null;
+                    
+                } else {
+                    System.out.println("Opção invalida");
+                }
             }
             else{
                 System.out.println(opcoesSemLogin);
@@ -86,17 +89,17 @@ public class Terminal {
                     if(opCadastro.equals("s")){
                         System.out.println("Informe seu CPF:");
                         String cpfAccount = scan.next();
-                        Client clienteAccount = null;
-                        for(Client c : clientesBd){
+                        Client clientAccount = null;
+                        for(Client c : clientRepository.findAll()){
                             if(c.getCpf().equals(cpfAccount)){
-                                clienteAccount = c;
+                                clientAccount = c;
                             }
                         }
-                        if(clienteAccount != null){
-                            Account conta = contaController.createAccount(clienteAccount);
+                        if(clientAccount != null){
+                            Account conta = accountController.createAccount(clientAccount);
                             if(conta != null){
-                                System.out.println("Account criada com sucesso");
-                                contasBd.add(conta);
+                                System.out.println("Conta criada com sucesso");
+                                accountRepository.save(conta);
                             }
                             
                             
@@ -105,14 +108,14 @@ public class Terminal {
                         }
                     }
                     else{
-                        Client cliente = clienteController.criarClient();
-                        Account conta = contaController.createAccount(cliente);
-                        if(conta!=null){
-                            System.out.println("Account criada com sucesso");
-                            contasBd.add(conta);
+                        Client cliente = clientController.createClient();
+                        if(cliente != null){
+                            System.out.println("Cliente cadastrado com sucesso");
                         }
+                        accountController.createAccount(cliente);
                         
-                        clientesBd.add(cliente);
+                        
+                        
                     }
                     
                     
@@ -123,7 +126,7 @@ public class Terminal {
                     System.out.println("Informe sua senha:");
                     String senhaLogin = scan.next();
                     Client clienteLogado = null;
-                    for(Client c : clientesBd){
+                    for(Client c : clientRepository.findAll()){
                         if(c.getCpf().equals(cpfLogin)){
                             clienteLogado = c;
                         }
@@ -143,10 +146,14 @@ public class Terminal {
                     scan.close();
                     return;
                 } else if(op == 4){
-                    System.out.println("Clients cadastrados");
-                    this.clientesBd.forEach(System.out::println);
+                    System.out.println("Clientes cadastrados");
+                    this.clientRepository.findAll().forEach(System.out::println);
                     
-                } else {
+                }else if(op == 5){
+                    System.out.println("Contas cadastradas");
+                    this.accountRepository.findAll().forEach(System.out::println);
+                }
+                else {
                     System.out.println("Opção invalida");
                 }
                 
