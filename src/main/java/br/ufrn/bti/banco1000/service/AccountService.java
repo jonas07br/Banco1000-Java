@@ -5,11 +5,17 @@ import java.util.Scanner;
 import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Account;
 import br.ufrn.bti.banco1000.model.enumerations.AccountType;
+import br.ufrn.bti.banco1000.repository.AccountRepository;
 
 public class AccountService {
+    private AccountRepository accountRepository;
+
+    public AccountService(){
+        this.accountRepository = new AccountRepository();
+    }
 
     private Scanner scan = new Scanner(System.in);
-    public Account criarConta(Client cliente){
+    public Account createAccount(Client cliente){
         try{
             AccountType accountType = null;
             System.out.println("Qual tipo de conta deseja criar?");
@@ -31,7 +37,7 @@ public class AccountService {
                 break;
             }
             Account conta = new Account(cliente.getId(),accountType,senha);
-            // cliente.setContas(conta);
+            accountRepository.save(conta);
             
             return conta;
 

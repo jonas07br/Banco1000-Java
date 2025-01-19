@@ -6,24 +6,42 @@ import java.util.Scanner;
 import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Account;
 import br.ufrn.bti.banco1000.model.Transaction;
+import br.ufrn.bti.banco1000.repository.ClientRepository;
 
 public class ClientService {
 
     private  Scanner scan = new Scanner(System.in);
+    private ClientRepository clientRepository;
 
+    public ClientService(){
+        this.clientRepository = new ClientRepository();
+    }
     public  void closeScanner(){
         scan.close();
     }   
-    public  Client criarClient(){
+    public Client createClient(){
         while(true){
-            String nome = this.setNome();
-            String cpf = this.setCpf();
-            String email = this.setEmail();
-            String telefone = this.setTelefone();
-            String senha = this.setSenha();
-            
-            System.out.println("Client criado com sucesso");
-            return new Client(nome, cpf, email, telefone, senha);
+            try{
+                String cpf = this.getCPFAndverify();
+                if(clientRepository.findByCpf(cpf)!=null){
+                    System.out.println("Cpf ja cadastrado");
+                    continue;
+                }
+                String name = this.getNameAndVerify();
+                String email = this.getEmailAndVerify();
+                String phoneNumber = this.getPhoneNumberAndVerify();
+                String password = this.getPasswordAndVerify();
+                Long id = clientRepository.findAll().size()+1L;
+
+                Client client = new Client(id,name, cpf, email, phoneNumber, password);
+                
+                clientRepository.save(client);
+                return client;
+
+            }catch(Exception e){
+                System.out.println("Erro ao criar cliente");
+                return null;
+            }
         }
     }
     public Client atualizarClient(Client cliente) {
@@ -35,14 +53,14 @@ public class ClientService {
         int op =scanOp.nextInt();
         switch (op){
             case 1:
-                cliente.setName(setNome());
+                cliente.setName(getNameAndVerify());
                 break;
             case 2:
-                cliente.setEmail(setEmail()); 
+                cliente.setEmail(getEmailAndVerify()); 
                 break;
                 
             case 3:
-                cliente.setPhoneNumber(setTelefone());  
+                cliente.setPhoneNumber(getPhoneNumberAndVerify());  
                 break;
                 
             default:
@@ -54,17 +72,17 @@ public class ClientService {
 
     }
 
-    private  String setNome(){
+    private  String getNameAndVerify(){
         while(true){
             System.out.println("Digite o nome do cliente: ");   
-            String nome = scan.nextLine();
-            if(nome.length() > 0){
-                return nome;
+            String name = scan.nextLine();
+            if(name.length() > 0){
+                return name;
             }
             System.out.println("Nome invalido");
         }
     }
-    private  String setCpf(){
+    private  String getCPFAndverify(){
         while(true){
             System.out.println("Digite o cpf do cliente: ");   
             String cpf = scan.next();
@@ -74,7 +92,7 @@ public class ClientService {
             System.out.println("Cpf invalido");
         }
     }
-    private  String setEmail(){
+    private  String getEmailAndVerify(){
         while(true){
             System.out.println("Digite o email do cliente: ");   
             String email = scan.next();
@@ -88,22 +106,22 @@ public class ClientService {
             System.out.println("Email invalido");
         }
     }
-    private  String setTelefone(){
+    private  String getPhoneNumberAndVerify(){
         while(true){
-            System.out.println("Digite o telefone do cliente: ");   
-            String telefone = scan.next();
-            if(telefone.length() == 11){
-                return telefone;
+            System.out.println("Digite o numero telefonico do cliente: ");   
+            String phoneNumber = scan.next();
+            if(phoneNumber.length() == 11){
+                return phoneNumber;
             }
             System.out.println("Telefone invalido");
         }
     }
-    private String setSenha(){
+    private String getPasswordAndVerify(){
         while(true){
             System.out.println("Informe uma senha alfanumerica para acesso a conta: ");   
-            String senha = scan.next();
-            if(senha.length() > 0){
-                return senha;
+            String password = scan.next();
+            if(password.length() > 0){
+                return password;
             }
             System.out.println("Senha invalida");
         }
