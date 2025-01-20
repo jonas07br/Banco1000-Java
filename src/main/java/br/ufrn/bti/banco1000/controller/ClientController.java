@@ -8,36 +8,39 @@ import br.ufrn.bti.banco1000.service.ClientService;
 
 public class ClientController {
 
-    private ClientService clienteService;
+    private ClientService clientService;
     public ClientController(){
-        this.clienteService = new ClientService();
+        this.clientService = new ClientService();
     }
 
-    public Client criarClient(){
+    public Client login(){
+        return clientService.login();
+    }
+    public Client createClient(){
         System.out.println("Criando cliente");
-        return clienteService.criarClient();
+        return clientService.createClient();
     }
     // public Client atualizarClient(Client cliente){
     //     System.out.println("Atualizando cliente");
-    //     return clienteService.atualizarClient(cliente);
+    //     return clientService.atualizarClient(cliente);
     // }
 
-    //funcoes enquanto logado
-    public String depositar(Client clienteLogado) {
-        return clienteService.depositar(clienteLogado);
+    // funcoes enquanto logado
+    public String deposit(Client loggedClient) {
+        return clientService.deposit(loggedClient);
     }
-    public String sacar(Client clienteLogado) {
-        return clienteService.sacar(clienteLogado);
+    public String withdraw(Client loggedClient) {
+        return clientService.withdraw(loggedClient);
     }
-    public String transferir(Client clienteLogado, List<Account> contas) {
-        return clienteService.transferir(clienteLogado,contas);
+    public String transfer(Client loggedClient) {
+        return clientService.transfer(loggedClient);
     }
-    public String verSaldo(Client clienteLogado) {
-        return clienteService.verSaldo(clienteLogado);
+    public String getBalance(Client loggedClient) {
+        return clientService.getBalance(loggedClient);
     }
-    public String verExtrato(Client clienteLogado) {
-        return clienteService.verExtrato(clienteLogado);
-    }
+    // public String verExtrato(Client loggedClient) {
+    //     return clientService.verExtrato(loggedClient);
+    // }
 
 
     

@@ -4,6 +4,8 @@
  */
 package br.ufrn.bti.banco1000.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,63 +14,108 @@ import java.util.Date;
  */
 public class Transaction {
     
-    private Date data;
-    private String tipo;
-    private Client cliente;
-    private String descricao;
-    private double valor;
+    private Long id;
+    private Long userId;
+    private LocalDate date;
+    private String type;
+    private Long sourceAccountId;
+    private Long destinationAccountId;
+    private String description;
+    private BigDecimal value;
     
-    public Date getData() {
-        return data;
+    public static String[] getHeaders() {
+        return new String[] {"id", "userId", "date", "type", "sourceAccountId","destinationAccountId", "description", "value"};
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public Transaction(Long id,Long userId,String type, Long sourceAccountId, Long destinationAccountId, String description,
+            BigDecimal value) {
+        this.id = id;
+        this.userId=userId;
+        this.date = LocalDate.now();
+        this.type = type;
+        this.sourceAccountId = sourceAccountId;
+        this.destinationAccountId = destinationAccountId;
+        this.description = description;
+        this.value = value;
     }
-
-    public String getTipo() {
-        return tipo;
+    public Transaction(Long id,Long userId,LocalDate date,String type, Long sourceAccountId, Long destinationAccountId, String description,
+            BigDecimal value) {
+        this.id = id;
+        this.userId=userId;
+        this.date = date;
+        this.type = type;
+        this.sourceAccountId = sourceAccountId;
+        this.destinationAccountId = destinationAccountId;
+        this.description = description;
+        this.value = value;
     }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public LocalDate getDate() {
+        return date;
     }
-
-    public Client getCliente() {
-        return cliente;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-
-    public void setCliente(Client cliente) {
-        this.cliente = cliente;
+    public String getType() {
+        return type;
     }
-
-    public String getDescricao() {
-        return descricao;
+    public void setType(String type) {
+        this.type = type;
     }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public Long getSourceAccountId() {
+        return sourceAccountId;
     }
-
-    public double getValor() {
-        return valor;
+    public void setSourceAccountId(Long sourceAccountId) {
+        this.sourceAccountId = sourceAccountId;
     }
-
-    public void setValor(double valor) {
-        this.valor = valor;
+    public Long getDestinationAccountId() {
+        return destinationAccountId;
     }
-    
-    public Transaction(String tipo, Client cliente, String descricao, double valor) {
-        this.data = new Date();
-        this.tipo = tipo;
-        this.cliente = cliente;
-        this.descricao = descricao;
-        this.valor = valor;
+    public void setDestinationAccountId(Long destinationAccountId) {
+        this.destinationAccountId = destinationAccountId;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public BigDecimal getValue() {
+        return value;
+    }
+    public void setValue(BigDecimal value) {
+        this.value = value;
     }
 
     @Override
     public String toString() {
-        return "Movimentacao [data=" + data + ", tipo=" + tipo + ", cliente=" + cliente.getNome() + ", descricao=" + descricao
-                + ", valor=" + valor + "]";
+        return 
+        id +","+
+        userId +","+
+        date +","+
+        type+","+
+        sourceAccountId +","+ 
+        destinationAccountId +","+
+        description +","+
+        value;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+    
+    
+
+    
 }

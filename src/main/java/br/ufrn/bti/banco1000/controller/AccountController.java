@@ -13,7 +13,7 @@ public class AccountController {
     
     public Account createAccount(Client cliente){
         System.out.println("Criando conta");
-        return contaService.criarConta(cliente);
+        return contaService.createAccount(cliente);
     }
     
     
