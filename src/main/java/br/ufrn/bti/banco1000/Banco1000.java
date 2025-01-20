@@ -4,6 +4,13 @@
 
 package br.ufrn.bti.banco1000;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
+
+import br.ufrn.bti.banco1000.model.Transaction;
+import br.ufrn.bti.banco1000.repository.TransactionRepository;
 import br.ufrn.bti.banco1000.view.Terminal;
 
 

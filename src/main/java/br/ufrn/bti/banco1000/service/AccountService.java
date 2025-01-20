@@ -1,5 +1,6 @@
 package br.ufrn.bti.banco1000.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -54,20 +55,50 @@ public class AccountService {
         
     }
     public void deposit(Account account,double value){
+        BigDecimal bigDecimalValue = new BigDecimal(value);
+        
         List<Account> accounts = accountRepository.findAll();
         for(Account acc: accounts){
             if(acc.getAccountNumber().compareTo(account.getAccountNumber()) == 0){
-                acc.setBalance(acc.getBalance()+value);
+                acc.setBalance(acc.getBalance().add(bigDecimalValue));
                 break;
             }
         }
         accountRepository.saveAll(accounts);
     }
     public void withdraw(Account account,double value){
+        BigDecimal bigDecimalValue = new BigDecimal(value);
+
         List<Account> accounts = accountRepository.findAll();
         for(Account acc: accounts){
             if(acc.getAccountNumber().compareTo(account.getAccountNumber()) == 0){
-                acc.setBalance(acc.getBalance()-value);
+                if(acc.getBalance().compareTo(bigDecimalValue) < 0){
+                    System.out.println("Saldo insuficiente");
+                    return;
+                }
+                acc.setBalance(acc.getBalance().subtract(bigDecimalValue));
+                break;
+            }
+        }
+        accountRepository.saveAll(accounts);
+    }
+    
+    public void transfer(Account account, Account accountDestiny, double value){
+        BigDecimal bigDecimalValue = new BigDecimal(value);
+        List<Account> accounts = accountRepository.findAll();
+        for(Account acc: accounts){
+            if(acc.getAccountNumber().compareTo(account.getAccountNumber()) == 0){
+                if(acc.getBalance().compareTo(bigDecimalValue) < 0){
+                    System.out.println("Saldo insuficiente");
+                    return;
+                }
+                acc.setBalance(acc.getBalance().subtract(bigDecimalValue));
+                break;
+            }
+        }
+        for(Account acc: accounts){
+            if(acc.getAccountNumber().compareTo(accountDestiny.getAccountNumber()) == 0){
+                acc.setBalance(acc.getBalance().add(bigDecimalValue));
                 break;
             }
         }

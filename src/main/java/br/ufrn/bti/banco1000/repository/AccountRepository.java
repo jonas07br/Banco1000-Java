@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class AccountRepository {
                 Long clientId = Long.parseLong(csvRecord.get(Account.getHeaders()[2]));
                 AccountType accountType = AccountType.valueOf(csvRecord.get(Account.getHeaders()[3]));
                 int password = Integer.parseInt(csvRecord.get(Account.getHeaders()[4]));
-                double balance = Double.parseDouble(csvRecord.get(Account.getHeaders()[5]));
+                BigDecimal balance = new BigDecimal(csvRecord.get(Account.getHeaders()[5]));
 
                 if(AccountType.CORRENTE.equals(accountType)){
                     CurrentAccount account = new CurrentAccount(agency, accountNumber, clientId, accountType, password, balance);
@@ -131,5 +132,19 @@ public class AccountRepository {
         catch(IOException e){
             e.printStackTrace();
         }
+    }
+    public Account findByAccountNumber(Long accountNumber){
+        try{
+            List<Account> allAccounts = readCsv();
+            for(Account account : allAccounts){
+                if(account.getAccountNumber().equals(accountNumber)){
+                    return account;
+                }
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

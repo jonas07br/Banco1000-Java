@@ -13,6 +13,9 @@ public class ClientController {
         this.clientService = new ClientService();
     }
 
+    public Client login(){
+        return clientService.login();
+    }
     public Client createClient(){
         System.out.println("Criando cliente");
         return clientService.createClient();
@@ -26,17 +29,17 @@ public class ClientController {
     public String deposit(Client loggedClient) {
         return clientService.deposit(loggedClient);
     }
-    public String withdraw(Client clienteLogado) {
-        return clientService.withdraw(clienteLogado);
+    public String withdraw(Client loggedClient) {
+        return clientService.withdraw(loggedClient);
     }
-    // public String transferir(Client clienteLogado, List<Account> contas) {
-    //     return clientService.transferir(clienteLogado,contas);
-    // }
-    public String getBalance(Client clienteLogado) {
-        return clientService.getBalance(clienteLogado);
+    public String transfer(Client loggedClient) {
+        return clientService.transfer(loggedClient);
     }
-    // public String verExtrato(Client clienteLogado) {
-    //     return clientService.verExtrato(clienteLogado);
+    public String getBalance(Client loggedClient) {
+        return clientService.getBalance(loggedClient);
+    }
+    // public String verExtrato(Client loggedClient) {
+    //     return clientService.verExtrato(loggedClient);
     // }
 
 

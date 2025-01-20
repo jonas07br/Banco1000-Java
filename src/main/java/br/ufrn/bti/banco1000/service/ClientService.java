@@ -160,17 +160,6 @@ public class ClientService {
     }
 
 
-    // public Account selecionarConta(Client cliente){
-    //     System.out.println("Selecione a conta desejada:");
-    //         for(int i = 1; i <= cliente.getContas().size(); i++){
-    //             System.out.println(i + " - " + cliente.getContas().get(i-1).getNumConta()+ " - "+cliente.getContas().get(i-1).getTipo());
-    //         }
-    //         int op = scan.nextInt();
-    //         if(cliente.getContas().get(op-1)==null){
-    //             System.out.println("Conta inexistente");
-    //         }
-    //         return cliente.getContas().get(op-1);
-    // }
     public String withdraw(Client cliente) {
         List<Account> accounts = accountRepository.findByClientId(cliente.getId());
         
@@ -181,45 +170,57 @@ public class ClientService {
             accountService.withdraw(accounts.get(0), valor);
             return "Saque realizado";
         }
-        else{
+        else if(accounts.size()>1){
             System.out.println("Selecione a conta desejada:");
             for(int i = 1; i <= accounts.size(); i++){
                 System.out.println(i + " - " + accounts.get(i-1).getAccountNumber()+ " - "+accounts.get(i-1).getTipo());
             }
             int op = scan.nextInt();
-            if(accounts.get(op-1)==null){
-                System.out.println("Conta inexistente");
+            if(accounts.get(op-1)!=null){
+                System.out.println("Qual valor deseja sacar?");
+                double valor = scan.nextDouble();
+                accountService.withdraw(accounts.get(op-1), valor);
+                return "Saque realizado";
             }
-            System.out.println("Qual valor deseja sacar?");
-            double valor = scan.nextDouble();
-            accountService.withdraw(accounts.get(op-1), valor);
-            return "Saque realizado";
+            System.out.println("Conta inexistente");
+            return "Saque não realizado";
+        }else{
+            System.out.println("Voce não possui conta(s) cadastrada(s)");
+            return "Saque não realizado";
         }
     }
-    // public String transferir(Client clienteLogado, List<Account> contasBd) {
-    //     System.out.println("Qual valor deseja transferir?");
-    //     double valor = scan.nextDouble();
-    //     System.out.println("Informe o numero da conta do destinatario:");
-    //     int numConta = scan.nextInt();
-    //     Account contaDestino = null;
-    //     for(Account c : contasBd){
-    //         if(c.getNumConta()==numConta){
-    //             contaDestino = c;
-    //             System.out.println("Conta encontrada");
-    //         }
-    //     }
-    //     if(contaDestino == null){
-    //         System.out.println("Conta inexistente");
-    //     }
-    //     if(clienteLogado.getContas().size()>1){
-    //         System.out.println("Selecione de onde o dinheiro sairá.");
-    //         return this.selecionarConta(clienteLogado).transferir(contaDestino, valor);
-    //     }
-    //     else{
-    //         return clienteLogado.getContas().get(0).transferir(contaDestino, valor);
-    //     }
+    public String transfer(Client clienteLogado) {
+        System.out.println("Qual valor deseja transferir?");
+        double valor = scan.nextDouble();
 
-    // }
+        System.out.println("Informe o numero da conta do destinatario:");
+        Long numConta = scan.nextLong();
+        
+        if(accountRepository.findByAccountNumber(numConta)!=null){
+            Account contaDestino = accountRepository.findByAccountNumber(numConta);
+            System.out.println("Conta encontrada: "+contaDestino);
+            List<Account> accounts = accountRepository.findByClientId(clienteLogado.getId());
+            if(accounts.size()==1){
+                accountService.transfer(accounts.get(0), contaDestino, valor);
+                return "Transferencia realizada";
+            }
+            else{
+                System.out.println("Selecione a conta origem:");
+                for(int i = 1; i <= accounts.size(); i++){
+                    System.out.println(i + " - " + accounts.get(i-1).getAccountNumber()+ " - "+accounts.get(i-1).getTipo());
+                }
+                int op = scan.nextInt();
+                if(accounts.get(op-1)!=null){
+                    accountService.transfer(accounts.get(op-1), contaDestino, valor);
+                    return "Transferencia realizada";
+                }
+                System.out.println("Conta inexistente");
+                return "Transferencia não realizada";
+            }
+            
+        }
+        return "";
+    }
     public String getBalance(Client clienteLogado) {
         List<Account> accounts = accountRepository.findByClientId(clienteLogado.getId());
         if(accounts.size()==1){
@@ -247,6 +248,17 @@ public class ClientService {
     //         return "Extrato impresso";
     //     }
     // }
+    public Client login() {
+        System.out.println("Informe seu CPF:");
+        String cpf = scan.next();
+        System.out.println("Informe sua senha:");
+        String password = scan.next();
+        Client client = clientRepository.findByCpf(cpf);
+        if(client!=null && client.getPassword().equals(password)){
+            return client;
+        }
+        return null;
+    }
 
     
 
