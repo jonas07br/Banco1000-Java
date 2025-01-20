@@ -6,6 +6,7 @@ package br.ufrn.bti.banco1000.model;
 
 import br.ufrn.bti.banco1000.model.enumerations.AccountType;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ public class Account {
     private Long accountNumber;
     private AccountType accountType;
     private int password;
-    private double balance;
+    private BigDecimal balance;
     
 
     public AccountType getTipo() {
@@ -29,11 +30,11 @@ public class Account {
         this.accountNumber = Math.abs(new Random().nextLong()%10000)+1;
         this.accountType = accountType;
         this.password = password;
-        this.balance = 0;
+        this.balance = BigDecimal.ZERO;
     }
     
     public Account(int agency, Long accountNumber, Long clientId, AccountType accountType, int password,
-            double balance) {
+            BigDecimal balance) {
         this.agency = agency;
         this.accountNumber = accountNumber;
         this.clientId = clientId;
@@ -47,12 +48,7 @@ public class Account {
         return false;
     }
     
-    public boolean notNull(){
-        if(this.agency != 0 && this.accountNumber != 0 && this.accountType != null && this.password != 0 && this.balance != 0){
-            return true;
-        }
-        return false;
-    }
+
     
     public void setTipoConta(AccountType accountType) {
         this.accountType = accountType;
@@ -113,11 +109,11 @@ public class Account {
         this.password = password;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
     
