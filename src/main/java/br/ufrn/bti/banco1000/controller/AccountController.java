@@ -12,7 +12,7 @@ public class AccountController {
     }
     
     public Account createAccount(Client cliente){
-        System.out.println("Criando conta");
+        System.out.println(">>>Criando conta");
         return contaService.createAccount(cliente);
     }
     

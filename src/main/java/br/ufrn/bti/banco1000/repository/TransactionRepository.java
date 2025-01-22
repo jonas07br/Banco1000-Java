@@ -24,7 +24,7 @@ public class TransactionRepository {
 
     private static final String SAMPLE_CSV_FILE_PATH = "src\\main\\resources\\persistence\\transactions.csv";
 
-    public static List<Transaction> findAll(){
+    public  List<Transaction> findAll(){
         List<Transaction> transactions = new ArrayList<>();
         try{
             transactions=readCsv();
@@ -35,7 +35,7 @@ public class TransactionRepository {
         return transactions;
     }
 
-    public static void save(Transaction transaction){
+    public  void save(Transaction transaction){
         try{
             List<Transaction> transactions = readCsv();
             transactions.add(transaction);
@@ -46,7 +46,7 @@ public class TransactionRepository {
         }
     }
 
-    private static void writeCsv(List<Transaction> transactions) throws IOException{
+    private  void writeCsv(List<Transaction> transactions) throws IOException{
         try (
             StringWriter writer = new StringWriter();
             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
@@ -54,14 +54,22 @@ public class TransactionRepository {
             );
             ) {
                 for (Transaction transaction : transactions) {
-                    csvPrinter.printRecord(transaction.getId(), transaction.getUserId(), transaction.getDate(), transaction.getType(), transaction.getSourceAccountId(), transaction.getDestinationAccountId(), transaction.getDescription(), transaction.getValue());
+                    csvPrinter.printRecord(
+                        transaction.getId(),
+                        transaction.getUserId(), 
+                        transaction.getDate(), 
+                        transaction.getType(), 
+                        transaction.getSourceAccountId()==null?0:transaction.getSourceAccountId(), 
+                        transaction.getDestinationAccountId()==null?0:transaction.getDestinationAccountId(), 
+                        transaction.getDescription(), 
+                        transaction.getValue());
                 }
                 Files.write(Paths.get(SAMPLE_CSV_FILE_PATH), writer.toString().getBytes());
             }
         }
 
 
-    private static List<Transaction> readCsv() throws IOException{
+    private  List<Transaction> readCsv() throws IOException{
         try (
             Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
             
@@ -80,8 +88,8 @@ public class TransactionRepository {
                 Long userId= Long.parseLong(csvRecord.get(Transaction.getHeaders()[1]));
                 LocalDate date= LocalDate.parse(csvRecord.get(Transaction.getHeaders()[2]));
                 String type= csvRecord.get(Transaction.getHeaders()[3]);
-                Long sourceAccountId= Long.parseLong(csvRecord.get(Transaction.getHeaders()[4]));
-                Long destinationAccountId= Long.parseLong(csvRecord.get(Transaction.getHeaders()[5]));
+                Long sourceAccountId= Long.parseLong(csvRecord.get(Transaction.getHeaders()[4])!=null?csvRecord.get(Transaction.getHeaders()[4]):"0");
+                Long destinationAccountId= Long.parseLong(csvRecord.get(Transaction.getHeaders()[5])!=null?csvRecord.get(Transaction.getHeaders()[5]):"0");
                 String description  = csvRecord.get(Transaction.getHeaders()[6]);
                 BigDecimal value= new BigDecimal(csvRecord.get(Transaction.getHeaders()[7]));
                 Transaction transaction = new Transaction(id, userId, date, type, sourceAccountId, destinationAccountId, description, value);
@@ -94,5 +102,20 @@ public class TransactionRepository {
             e.printStackTrace();
             return null;
         }
+    }
+    public List<Transaction> findByClientId(Long userId) {
+        List<Transaction> transactions = new ArrayList<>();
+        try{
+            List<Transaction> allTransactions = readCsv();
+            for(Transaction transaction : allTransactions){
+                if(transaction.getUserId().equals(userId)){
+                    transactions.add(transaction);
+                }
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return transactions;
     }
 }
