@@ -1,5 +1,6 @@
 package br.ufrn.bti.banco1000.repository;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
@@ -23,6 +24,15 @@ import br.ufrn.bti.banco1000.model.SavingsAccount;
 import br.ufrn.bti.banco1000.model.enumerations.AccountType;
 
 public class AccountRepository {
+
+    public AccountRepository(){
+        try{
+            readCsv();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
     private static final String SAMPLE_CSV_FILE_PATH = "src\\main\\resources\\persistence\\accounts.csv";
 
     public List<Account> findAll(){
@@ -104,8 +114,11 @@ public class AccountRepository {
             }
             return accounts;
         }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
+        catch(Exception e){
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(SAMPLE_CSV_FILE_PATH));
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader(Account.getHeaders())
+                    );
             return null;
         }
     }
