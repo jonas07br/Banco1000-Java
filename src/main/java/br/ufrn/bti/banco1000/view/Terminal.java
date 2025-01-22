@@ -9,11 +9,8 @@ import br.ufrn.bti.banco1000.controller.ClientController;
 import br.ufrn.bti.banco1000.controller.AccountController;
 import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Account;
-import br.ufrn.bti.banco1000.model.enumerations.AccountType;
 import br.ufrn.bti.banco1000.repository.AccountRepository;
 import br.ufrn.bti.banco1000.repository.ClientRepository;
-import br.ufrn.bti.banco1000.service.ClientService;
-import br.ufrn.bti.banco1000.service.AccountService;
 
 public class Terminal {
 

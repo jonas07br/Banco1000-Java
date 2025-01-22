@@ -1,5 +1,6 @@
 package br.ufrn.bti.banco1000.repository;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,9 +18,18 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import br.ufrn.bti.banco1000.model.Account;
 import br.ufrn.bti.banco1000.model.Client;
 @SuppressWarnings("deprecation")
 public class ClientRepository {
+    public ClientRepository(){
+        try{
+            readCsv();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
     private static final String SAMPLE_CSV_FILE_PATH = "src\\main\\resources\\persistence\\users.csv";
 
     public List<Client> findAll(){
@@ -100,8 +110,11 @@ public class ClientRepository {
             }
             return clients;
         }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
+        catch(Exception e){
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(SAMPLE_CSV_FILE_PATH));
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader(Client.getHeaders())
+                    );
             return null;
         }
     }
