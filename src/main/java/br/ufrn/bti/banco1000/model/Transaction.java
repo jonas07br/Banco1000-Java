@@ -88,15 +88,15 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return 
-        id +","+
-        userId +","+
-        date +","+
-        type+","+
-        sourceAccountId +","+ 
-        destinationAccountId +","+
-        description +","+
-        value;
+        
+        return "Transação{" +
+                "id=" + id +
+                ", data=" + date +
+                ", tipo='" + type + '\'' +
+                ", descrição='" + description + '\'' +
+                ", valor=" + value +
+                '}';
+        
     }
 
     public Long getId() {

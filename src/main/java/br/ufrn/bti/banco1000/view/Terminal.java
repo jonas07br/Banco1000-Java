@@ -56,25 +56,36 @@ public class Terminal {
             if(clienteLogado != null){
                 System.out.println(opcoesComLogin);
                 int op = scan.nextInt();
-                if(op == 1){
-                    Terminal.clearScreen();
-                    System.out.println(this.clientController.deposit(clienteLogado));
-                }else if(op == 2){
-                    Terminal.clearScreen();
-                    System.out.println(this.clientController.withdraw(clienteLogado));
-                }else if(op == 3){
-                    Terminal.clearScreen();
-                    System.out.println(this.clientController.transfer(clienteLogado));
-                }else if(op == 4){
-                    Terminal.clearScreen();
-                    System.out.println(this.clientController.getBalance(clienteLogado));
-                }else if(op == 6){
-                    this.clienteLogado = null;
-                    Terminal.clearScreen();
-                    
-                } else {
-                    System.out.println("Opção invalida");
+                switch (op) {
+                    case 1:
+                        Terminal.clearScreen();
+                        System.out.println(this.clientController.deposit(clienteLogado));
+                        break;
+                    case 2:
+                        Terminal.clearScreen();
+                        System.out.println(this.clientController.withdraw(clienteLogado));
+                        break;
+                    case 3:
+                        Terminal.clearScreen();
+                        System.out.println(this.clientController.transfer(clienteLogado));
+                        break;
+                    case 4:
+                        Terminal.clearScreen();
+                        System.out.println(this.clientController.getBalance(clienteLogado));
+                        break;
+                    case 5:
+                        Terminal.clearScreen();
+                        this.clientController.getExtract(clienteLogado);
+                        break;
+                    case 6:
+                        this.clienteLogado = null;
+                        Terminal.clearScreen();
+                        break;
+                    default:
+                        System.out.println("!!!Opção invalida");
+                        break;
                 }
+                
             }
             else{
                 System.out.println(opcoesSemLogin);
@@ -92,23 +103,23 @@ public class Terminal {
                             Account conta = accountController.createAccount(clientAccount);
                             if(conta != null){
                                 Terminal.clearScreen();
-                                System.out.println("Conta criada com sucesso");
+                                System.out.println(">>>Conta criada com sucesso");
                             }
                             
                         }else{
                             Terminal.clearScreen();
-                            System.out.println("Cpf ou senha incorretos");
+                            System.out.println("!!!Cpf ou senha incorretos");
                         }
                         
                     }
                     else{
                         Client cliente = clientController.createClient();
                         if(cliente != null){
-                            System.out.println("Cliente cadastrado com sucesso");
+                            System.out.println(">>>Cliente cadastrado com sucesso");
                         }
                         if(accountController.createAccount(cliente)!=null){
                             Terminal.clearScreen();
-                            System.out.println("Conta criada com sucesso");
+                            System.out.println(">>>Conta criada com sucesso");
                         }
                     }
                 } 
@@ -119,11 +130,11 @@ public class Terminal {
                         Terminal.clearScreen();
 
                         System.out.println("Logado com sucesso");
-                        System.out.println("Bem vindo "+clienteLogado.getName());
+                        System.out.println("Bem vindo "+clienteLogado.getName()+"!");
                         this.clienteLogado = clienteLogado;
                     
                     } else {
-                        System.out.println("Cpf ou senha incorretos");
+                        System.out.println("!!!Cpf ou senha incorretos");
                     }
                 }else if(op == 3){
                     scan.close();
@@ -156,7 +167,7 @@ public class Terminal {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (IOException | InterruptedException ex) {
-            System.err.println("Erro ao limpar a tela: " + ex.getMessage());
+            System.err.println(">>>Erro ao limpar a tela: " + ex.getMessage());
         }
     }
 }

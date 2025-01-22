@@ -17,13 +17,10 @@ public class ClientController {
         return clientService.login();
     }
     public Client createClient(){
-        System.out.println("Criando cliente");
+        System.out.println(">>>Criando cliente");
         return clientService.createClient();
     }
-    // public Client atualizarClient(Client cliente){
-    //     System.out.println("Atualizando cliente");
-    //     return clientService.atualizarClient(cliente);
-    // }
+    
 
     // funcoes enquanto logado
     public String deposit(Client loggedClient) {
@@ -38,9 +35,9 @@ public class ClientController {
     public String getBalance(Client loggedClient) {
         return clientService.getBalance(loggedClient);
     }
-    // public String verExtrato(Client loggedClient) {
-    //     return clientService.verExtrato(loggedClient);
-    // }
+    public String getExtract(Client loggedClient) {
+        return clientService.getExtract(loggedClient);
+    }
 
 
     

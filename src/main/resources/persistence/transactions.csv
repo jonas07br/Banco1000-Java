@@ -1,12 +1,5 @@
 id,userId,date,type,sourceAccountId,destinationAccountId,description,value
-1,101,2024-01-01,transfer,5001,6001,Transferencia bancaria,1500.00
-2,102,2024-01-02,deposit,0,5002,Deposito em conta,2000.00
-3,103,2024-01-03,withdraw,5003,0,Saque em caixa,500.00
-4,104,2024-01-04,transfer,5004,6002,Pagamento de fatura,750.00
-5,105,2024-01-05,deposit,0,5005,Deposito PIX,3000.00
-6,106,2024-01-06,withdraw,5006,0,Saque em loterica,800.00
-7,107,2024-01-07,transfer,5007,6003,Pagamento de fornecedor,4200.00
-8,108,2024-01-08,deposit,0,5008,Deposito TED,1200.00
-9,109,2024-01-09,withdraw,5009,0,Saque emergencial,300.00
-10,110,2024-01-10,transfer,5010,6004,Transferencia familiar,1000.00
-1,1,2025-01-19,DEPOSIT,1,1,Deposito,100
+1,112,2025-01-21,DEPOSITO,0,522,DEPOSITO,1000
+2,112,2025-01-21,SAQUE,522,0,SAQUE,10
+3,112,2025-01-21,TRANSFERENCIA,522,5525,TRANSFERENCIA ENVIADA,2
+3,2,2025-01-21,TRANSFERENCIA,5525,522,TRANSFERENCIA RECEBIDA,2
