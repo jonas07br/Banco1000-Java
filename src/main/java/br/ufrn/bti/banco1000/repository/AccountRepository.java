@@ -87,7 +87,7 @@ public class AccountRepository {
                 if(csvRecord.get(Account.getHeaders()[0]).equalsIgnoreCase("agency")){
                     continue;
                 }
-                int agency = Integer.parseInt(csvRecord.get(Account.getHeaders()[0]));
+                Long agency = Long.parseLong(csvRecord.get(Account.getHeaders()[0]));
                 Long accountNumber = Long.parseLong(csvRecord.get(Account.getHeaders()[1]));
                 Long clientId = Long.parseLong(csvRecord.get(Account.getHeaders()[2]));
                 AccountType accountType = AccountType.valueOf(csvRecord.get(Account.getHeaders()[3]));

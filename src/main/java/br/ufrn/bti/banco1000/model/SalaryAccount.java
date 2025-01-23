@@ -8,7 +8,7 @@ public class SalaryAccount extends Account {
     
     private final int withdrawalLimit = 2;
     
-    public SalaryAccount(int agency, Long accountNumber, Long clientId, AccountType accountType, int password,
+    public SalaryAccount(Long agency, Long accountNumber, Long clientId, AccountType accountType, int password,
             BigDecimal balance) {
         super(agency, accountNumber, clientId, accountType, password, balance);
     }
