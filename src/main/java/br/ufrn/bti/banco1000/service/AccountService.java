@@ -8,21 +8,38 @@ import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Transaction;
 import br.ufrn.bti.banco1000.exceptions.BusinessException;
 import br.ufrn.bti.banco1000.model.Account;
+import br.ufrn.bti.banco1000.model.Agency;
 import br.ufrn.bti.banco1000.model.enumerations.AccountType;
 import br.ufrn.bti.banco1000.repository.AccountRepository;
+import br.ufrn.bti.banco1000.repository.AgencyRepository;
 import br.ufrn.bti.banco1000.repository.TransactionRepository;
 
 public class AccountService {
     private AccountRepository accountRepository;
+    private AgencyRepository agencyRepository;
 
     public AccountService(){
         this.accountRepository = new AccountRepository();
+        this.agencyRepository = new AgencyRepository();
     }
 
     private Scanner scan = new Scanner(System.in);
     public Account createAccount(Client cliente){
         while(true){
             try{
+                List<Agency> agencies = agencyRepository.findAll();
+                System.out.println("Deseja criar a conta em qual agencia?");
+                for(int i = 0; i < agencies.size(); i++){
+                    System.out.println(i+1 + " - " + agencies.get(i).getAgencyName());
+                }
+                int opAgency = scan.nextInt();
+                scan.nextLine();
+                if(opAgency < 0 || opAgency-1 >= agencies.size()){
+                    System.out.println("!!!Opção invalida");
+                    continue;
+                }
+                Long agencyCode = agencyRepository.findAll().get(opAgency-1).getAgencyCode();
+                
                 AccountType accountType = null;
                 System.out.println("Qual tipo de conta deseja criar?");
                 System.out.println("1 - Corrente");
@@ -46,7 +63,7 @@ public class AccountService {
                     System.out.println("!!!Opção invalida");
                     break;
                 }
-                Account conta = new Account(cliente.getId(),accountType,senha);
+                Account conta = new Account(agencyCode,cliente.getId(),accountType,senha);
                 accountRepository.save(conta);
                 
                 return conta;
