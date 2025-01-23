@@ -9,7 +9,7 @@ public class CurrentAccount extends Account {
     
     private final double maintenancefees = 10.0;
     
-    public CurrentAccount(int agency, Long accountNumber, Long clientId, AccountType accountType, int password,
+    public CurrentAccount(Long agency, Long accountNumber, Long clientId, AccountType accountType, int password,
             BigDecimal balance) {
         super(agency, accountNumber, clientId, accountType, password, balance);
     }

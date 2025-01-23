@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Account {
     private Long clientId;
-    private int agency;
+    private Long agency;
     private Long accountNumber;
     private AccountType accountType;
     private int password;
@@ -23,17 +23,17 @@ public class Account {
         return accountType;
     }
     
-    public Account(Long clientId, AccountType accountType, int password) {
+    public Account(Long agency,Long clientId, AccountType accountType, int password) {
 
         this.clientId=clientId;
-        this.agency = 1000;
+        this.agency = agency;
         this.accountNumber = Math.abs(new Random().nextLong()%10000)+1;
         this.accountType = accountType;
         this.password = password;
         this.balance = BigDecimal.ZERO;
     }
     
-    public Account(int agency, Long accountNumber, Long clientId, AccountType accountType, int password,
+    public Account(Long agency, Long accountNumber, Long clientId, AccountType accountType, int password,
             BigDecimal balance) {
         this.agency = agency;
         this.accountNumber = accountNumber;
@@ -77,11 +77,11 @@ public class Account {
         this.clientId = clientId;
     }
 
-    public int getAgency() {
+    public Long getAgency() {
         return agency;
     }
 
-    public void setAgency(int agency) {
+    public void setAgency(Long agency) {
         this.agency = agency;
     }
 
