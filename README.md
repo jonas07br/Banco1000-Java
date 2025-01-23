@@ -1,45 +1,97 @@
-# Linguagem de Programação I - Laboratório I
+# Banco1000 - Projeto de Laboratório
 
-**Professor:** Vinicius Pereira Santana  
-**Data:** 30 de Outubro de 2024
+## Descrição do Projeto
+
+Este projeto foi desenvolvido como parte das atividades da disciplina **Linguagem de Programação I - Laboratório I**, ministrada pelo professor Vinicius Pereira Santana. O objetivo é criar o sistema **Banco1000** em Java, aplicando conceitos de orientação a objetos (OO), permitindo a gestão de contas bancárias e operações financeiras básicas.
 
 ## Exercício 1
 
-A orientação a objetos (OO) é um paradigma de programação que organiza o software em torno de "objetos" — representações de elementos do mundo real ou conceitos abstratos — e suas interações. Em vez de estruturar o código como uma sequência de comandos ou uma série de funções independentes, a OO modela sistemas de forma mais intuitiva e modular, facilitando a criação de software complexo, escalável e reutilizável.
+### 0.1 Objetivos
 
-Os próximos laboratórios serão desenvolvidos com base em um único projeto, seguindo o projeto do Banco que fizemos em sala.
+A versão 2.0 do sistema de banco em Java introduz novas funcionalidades e conceitos, incluindo o suporte para múltiplas agências, gerenciamento avançado de contas com herança, tratamento de exceções específicas e persistência de dados em arquivos.
 
-## Objetivo
+### 0.2 Requisitos Funcionais
 
-Desenvolver um sistema de banco simples em Java que permita o cadastro de usuários e operações bancárias básicas, como consulta de saldo, depósito, saque e transferência entre contas.
+**Funcionalidades Adicionadas na Versão 2.0**
 
-## Requisitos Funcionais
+a) Cada agência pode gerenciar diversas contas. As contas são registradas em agências específicas.
 
-1. **Cadastro de Usuários**
-2. **Cadastro de Contas**
-3. **Operações Bancárias**
-4. **Autenticação de Usuário**
+b) Contas herdando características e comportamentos da classe base Conta. Adição de novos tipos de contas, como:
+   - **ContaCorrente:** Taxas de manutenção.
+   - **ContaPoupança:** Rendimento mensal.
+   - **ContaSalário:** Restrita a depósitos do empregador e limitada a um número fixo de saques.
 
-### Detalhamento dos Requisitos
+c) Novas exceções personalizadas para tratar erros no contexto de múltiplas agências e contas.
 
-#### 1. Cadastro de Usuários
-- Permitir o cadastro de novos usuários no sistema.
-- Cada usuário deve ter um nome, CPF e senha para acesso.
-- Cada usuário pode ter uma ou mais contas associadas.
+d) Salvar e carregar os dados das agências, contas e transações a partir de arquivos no formato .csv.
 
-#### 2. Cadastro de Contas
-- Permitir a criação de contas bancárias para os usuários cadastrados.
-- Cada conta deve ter um número único, um saldo inicial e estar associada a um usuário.
-- As contas podem ser de tipo corrente ou poupança.
+## Funcionalidades Implementadas
 
-#### 3. Operações Bancárias
-- **Consulta de Saldo:** Permitir ao usuário consultar o saldo de sua conta.
-- **Depósito:** Permitir o depósito de uma quantia na conta, com atualização do saldo.
-- **Saque:** Permitir o saque de uma quantia da conta, com atualização do saldo. O saldo não pode ser negativo.
-- **Transferência:** Permitir a transferência de uma quantia de uma conta para outra. Ambas as contas devem pertencer a usuários cadastrados no sistema.
+### 1. Cadastro de Usuários
 
-#### 4. Autenticação de Usuário
-- Permitir o login de usuários com CPF e senha.
-- O acesso às operações de conta deve ser restrito ao usuário logado.
+- Cadastro de novos usuários com nome, CPF e senha.
+- Associação de múltiplas contas a um usuário.
 
+### 2. Cadastro de Contas
+
+- Criação de contas bancárias para usuários cadastrados.
+- Cada conta possui um número único e saldo inicial.
+- Suporte a contas corrente e poupança.
+
+### 3. Operações Bancárias
+
+- **Consulta de Saldo:** Visualização do saldo da conta.
+- **Depósito:** Adicionar valores ao saldo da conta.
+- **Saque:** Retirada de valores com controle de saldo negativo.
+- **Transferência:** Transferência de valores entre contas do sistema.
+
+### 4. Autenticação de Usuário
+
+- Login seguro via CPF e senha.
+- Restrição de acesso às contas apenas ao usuário autenticado.
+
+## Tecnologias Utilizadas
+
+- **Linguagem:** Java 17
+- **Framework:** Spring Boot
+- **Armazenamento de Dados:** Arquivos CSV utilizando Apache Commons CSV
+- **Ferramenta de Build:** Maven
+- **Controle de Versão:** Git/GitHub
+
+## Como Executar o Projeto
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/jonas07br/Banco1000-Java.git
+   cd Banco1000-Java
+   ```
+
+2. Compile o projeto usando Maven:
+
+   ```bash
+   mvn clean install
+   ```
+
+3. Execute o projeto:
+
+   ```bash
+   java -jar target/banco1000-1.0-SNAPSHOT.jar
+   ```
+
+## Possíveis Melhorias Futuras
+
+- Implementação de uma interface gráfica.
+- Integração com APIs de serviços bancários.
+- Auditoria e relatórios detalhados de transações.
+
+## Autores
+
+- Jonas Rafael Silva Cavalcanti
+- Gabriel Guilherme Carvalho Viana
+- Matheus Gabriel Souto de Lira Freitas
+
+---
+
+Projeto desenvolvido para fins acadêmicos.
 
