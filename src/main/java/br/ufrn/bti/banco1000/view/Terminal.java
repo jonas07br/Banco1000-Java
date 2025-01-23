@@ -9,18 +9,19 @@ import br.ufrn.bti.banco1000.controller.ClientController;
 import br.ufrn.bti.banco1000.controller.AccountController;
 import br.ufrn.bti.banco1000.model.Client;
 import br.ufrn.bti.banco1000.model.Account;
+import br.ufrn.bti.banco1000.model.Agency;
 import br.ufrn.bti.banco1000.repository.AccountRepository;
+import br.ufrn.bti.banco1000.repository.AgencyRepository;
 import br.ufrn.bti.banco1000.repository.ClientRepository;
 
 public class Terminal {
 
-    // private ClientService clienteService;
-    // private AccountService contaService;
     private ClientController clientController;
     private AccountController accountController;
 
     private ClientRepository clientRepository;
     private AccountRepository accountRepository;
+    private AgencyRepository agencyRepository;
 
     public Client clienteLogado;
 
@@ -28,7 +29,10 @@ public class Terminal {
     public String opcoesSemLogin = 
         "1 - Criar conta\n"+
         "2 - Logar\n"+
-        "3 - Sair";
+        "3 - Listar Usuarios\n"+
+        "4 - Listar Contas\n"+
+        "5 - Listar Agencias\n"+
+        "6 - Sair";
     public String opcoesComLogin = 
         "1 - Depositar\n"+
         "2 - Sacar\n"+
@@ -43,6 +47,7 @@ public class Terminal {
 
         this.clientRepository = new ClientRepository();
         this.accountRepository = new AccountRepository();
+        this.agencyRepository = new AgencyRepository();
 
         this.clienteLogado = null;
 
@@ -88,66 +93,75 @@ public class Terminal {
                 System.out.println(opcoesSemLogin);
 
                 int op = scan.nextInt();
+                switch (op) {
+                    case 1:
+                        System.out.println("Ja possui cadastro no banco? (s/n)");
+                        String opCadastro = scan.next();
+                        if(opCadastro.equals("s")){
 
-                if(op == 1){
-                    System.out.println("Ja possui cadastro no banco? (s/n)");
-                    String opCadastro = scan.next();
-                    if(opCadastro.equals("s")){
-
-                        Client clientAccount = clientController.login();
-                        
-                        if(clientAccount != null){
-                            Account conta = accountController.createAccount(clientAccount);
-                            if(conta != null){
+                            Client clientAccount = clientController.login();
+                            
+                            if(clientAccount != null){
+                                Account conta = accountController.createAccount(clientAccount);
+                                if(conta != null){
+                                    Terminal.clearScreen();
+                                    System.out.println(">>>Conta criada com sucesso");
+                                }
+                                
+                            }else{
+                                Terminal.clearScreen();
+                                System.out.println("!!!Cpf ou senha incorretos");
+                            }
+                            
+                        }
+                        else{
+                            Client cliente = clientController.createClient();
+                            if(cliente != null){
+                                System.out.println(">>>Cliente cadastrado com sucesso");
+                            }
+                            if(accountController.createAccount(cliente)!=null){
                                 Terminal.clearScreen();
                                 System.out.println(">>>Conta criada com sucesso");
                             }
-                            
-                        }else{
+                        }
+                        break;
+
+                    case 2:
+                        Client clienteLogado = clientController.login();
+                        if(clienteLogado != null){
                             Terminal.clearScreen();
+
+                            System.out.println("Logado com sucesso");
+                            System.out.println("Bem vindo "+clienteLogado.getName()+"!");
+                            this.clienteLogado = clienteLogado;
+                        
+                        } else {
                             System.out.println("!!!Cpf ou senha incorretos");
                         }
-                        
-                    }
-                    else{
-                        Client cliente = clientController.createClient();
-                        if(cliente != null){
-                            System.out.println(">>>Cliente cadastrado com sucesso");
-                        }
-                        if(accountController.createAccount(cliente)!=null){
-                            Terminal.clearScreen();
-                            System.out.println(">>>Conta criada com sucesso");
-                        }
-                    }
-                } 
-                else if(op == 2){
+                        break;
 
-                    Client clienteLogado = clientController.login();
-                    if(clienteLogado != null){
-                        Terminal.clearScreen();
+                    case 3:
+                        System.out.println("Clientes cadastrados");
+                        this.clientRepository.findAll().forEach(System.out::println);
+                        break;
 
-                        System.out.println("Logado com sucesso");
-                        System.out.println("Bem vindo "+clienteLogado.getName()+"!");
-                        this.clienteLogado = clienteLogado;
-                    
-                    } else {
-                        System.out.println("!!!Cpf ou senha incorretos");
-                    }
-                }else if(op == 3){
-                    scan.close();
-                    return;
-                } else if(op == 4){
-                    System.out.println("Clientes cadastrados");
-                    this.clientRepository.findAll().forEach(System.out::println);
-                    
-                }else if(op == 5){
-                    System.out.println("Contas cadastradas");
-                    this.accountRepository.findAll().forEach(System.out::println);
+                    case 4:
+                        System.out.println("Contas cadastradas");
+                        this.accountRepository.findAll().forEach(System.out::println);
+                        break;
+
+                    case 5:
+                        System.out.println("Agencias cadastradas");
+                        this.agencyRepository.findAll().forEach(System.out::println);
+                        break;
+                    case 6:
+                        scan.close();
+                        return;
+
+                    default:
+                        System.out.println("Opção invalida");
+                        break;
                 }
-                else {
-                    System.out.println("Opção invalida");
-                }
-                
             }
             
             
