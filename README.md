@@ -2,7 +2,7 @@
 
 ## Descrição do Projeto
 
-Este projeto foi desenvolvido como parte das atividades da disciplina **Linguagem de Programação I - Laboratório I**, ministrada pelo professor Vinicius Pereira Santana. O objetivo é criar o sistema **Banco1000** em Java, aplicando conceitos de orientação a objetos (OO), permitindo a gestão de contas bancárias e operações financeiras básicas.
+Este projeto foi desenvolvido como parte das atividades da disciplina **Linguagem de Programação II - Laboratório I**, ministrada pelo professor Vinicius Pereira Santana. O objetivo é criar o sistema **Banco1000** em Java, aplicando conceitos de orientação a objetos (OO), permitindo a gestão de contas bancárias e operações financeiras básicas.
 
 ## Exercício 1
 
